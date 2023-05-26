@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html lang='en'>
+
+    <head>
+        <title>Watermark</title>
+
+        <meta charset='utf-8'>
+        <meta name='viewport' content='width=device-witdth, initial-scale=1.0'>
+        <!-- Fontawesome -->
+        <link rel="stylesheet" href="css/fontawesome-free-6.2.1-web/css/fontawesome.css">
+        <link rel="stylesheet" href="css/fontawesome-free-6.2.1-web/css/solid.css">
+        <link rel="stylesheet" href="css/fontawesome-free-6.2.1-web/css/brands.min.css">
+        <link rel='stylesheet' href='./css/style.css'>
+
+    </head>
+
+    <body>
+        <div id='gallery'>
+            <input type='file' id='image-input' multiple='multiple' accept='image/png, image/jpeg, image/jpg'>
+
+        </div>
+
+
+        <div id='display-image'>
+            <div class='edit-buttons'>
+                <button id='add-text'>Add Text</button>
+                <button id='add-logo'>Add Logo</button>
+            </div>
+            <div class='image-container' id='image-to-download'>
+                <div class='image'></div>
+                <div class='text'></div>
+            </div>
+        </div>
+        
+        <div id='edit'>
+            <div class='text-editor'>
+                <input class='text-editor-input' type='text' placeholder='Type your text..' />
+            </div>
+            <button id='download'>Download</button>
+        </div>
+
+        <script src="./js/jquery-3.6.3.min.js"></script>
+        <script src="./node_modules/dom-to-image/dist/dom-to-image.min.js"></script>
+        <script src='./node_modules/file-saver/dist/FileSaver.js'></script>
+        <script src="./js/app.js"></script>
+
+    </body>
+</html>
