@@ -29,13 +29,39 @@
             </div>
             <div class='image-container' id='image-to-download'>
                 <div class='image'></div>
-                <div class='text'></div>
+                <p class='text'></p>
             </div>
         </div>
         
         <div id='edit'>
             <div class='text-editor'>
-                <input class='text-editor-input' type='text' placeholder='Type your text..' />
+                <textarea class='text-editor-input' type='text' placeholder='Type your text..'></textarea>
+                <i class="fa-solid fa-bold"></i>
+                <i class="fa-solid fa-italic"></i>
+                <i class="fa-solid fa-underline"></i>
+                <input class='text-editor-color' type='color' />
+                <div class='text-editor-size-container'>
+                    <p><span id='font-size'>16</span> px</p>
+                    <input class='text-editor-size' type='range' min='6' max='200' value='16' />
+                </div>
+                <div class='text-editor-opacity-container'>
+                    <p>Opacity</p>
+                    <input class='text-editor-opacity' type='range' min='0' max='1' step='0.05' value='1' />
+                </div>
+                <div class='text-editor-rotate-container'>
+                    <p>Rotate</p>
+                    <input class='text-editor-rotate' type='range' min='0' max='360' step='1' value='0' />
+                </div>
+                <div class='text-editor-background-container'>
+                    <p>Background</p>
+                    <input type='checkbox' class='background-checkbox'/>
+                    <input class='text-editor-background-color' type='color'/>
+                </div>
+                <div class='text-editor-outline-container'>
+                    <p>Outline</p>
+                    <input type='checkbox' class='outline-checkbox'/>
+                    <input class='text-editor-outline' type='color'/>
+                </div>
             </div>
             <button id='download'>Download</button>
         </div>
