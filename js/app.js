@@ -52,12 +52,11 @@ $('#logo-input').on('change', e => {
             const reader = new FileReader();
             reader.addEventListener('load', e => {
                 const uploadedLogo = e.target;
-                $('.image').append(`<div id='draggableResizableElement' class='logo' style='background-image: url(${uploadedLogo.result})'></div>`);
-
+                const logo = document.createElement('div');
+                logo.classList.add('logo');
+                logo.style.backgroundImage = `url(${uploadedLogo.result})`;
+                document.querySelector('.image').appendChild(logo);
                 // Moving the logo
-
-                // Get the draggable and resizable element
-                const draggableResizableElement = document.getElementById('draggableResizableElement');
 
                 // Initialize variables
                 let isDragging = false;
@@ -68,24 +67,33 @@ $('#logo-input').on('change', e => {
                 let startHeight;
 
                 // Add event listeners for mousedown and mouseup events
-                draggableResizableElement.addEventListener('mousedown', handleMouseDown);
+                logo.addEventListener('mousedown', handleMouseDown);
                 window.addEventListener('mouseup', handleMouseUp);
 
                 // Handle mousedown event on the element
                 function handleMouseDown(e) {
-                  if (e.target === draggableResizableElement) {
-                    e.preventDefault();
-                    startX = e.clientX;
-                    startY = e.clientY;
-                    startWidth = parseInt(getComputedStyle(draggableResizableElement).width, 10);
-                    startHeight = parseInt(getComputedStyle(draggableResizableElement).height, 10);
-
-                    if (e.offsetX > startWidth - 10 && e.offsetY > startHeight - 10) {
-                      isResizing = true;
-                    } else {
-                      isDragging = true;
+                    const allLogos = document.getElementsByClassName('logo');
+                    for (let i=0; i<allLogos.length; i++) {
+                        if (allLogos[i] === logo) {
+                            logo.classList.add('logo-focus');
+                        } else {
+                            allLogos[i].classList.remove('logo-focus');
+                        }
                     }
-                  }
+
+                    if (e.target === logo) {
+                        e.preventDefault();
+                        startX = e.clientX;
+                        startY = e.clientY;
+                        startWidth = parseInt(getComputedStyle(logo).width, 10);
+                        startHeight = parseInt(getComputedStyle(logo).height, 10);
+
+                        if (e.offsetX > startWidth - 10 && e.offsetY > startHeight - 10) {
+                            isResizing = true;
+                        } else {
+                            isDragging = true;
+                        }
+                    }
                 }
 
                 // Handle mouseup event on the window
@@ -102,8 +110,8 @@ $('#logo-input').on('change', e => {
                   if (isDragging) {
                     const dx = e.clientX - startX;
                     const dy = e.clientY - startY;
-                    draggableResizableElement.style.left = `${draggableResizableElement.offsetLeft + dx}px`;
-                    draggableResizableElement.style.top = `${draggableResizableElement.offsetTop + dy}px`;
+                    logo.style.left = `${logo.offsetLeft + dx}px`;
+                    logo.style.top = `${logo.offsetTop + dy}px`;
                     startX = e.clientX;
                     startY = e.clientY;
                   }
@@ -111,34 +119,10 @@ $('#logo-input').on('change', e => {
                   if (isResizing) {
                     const dw = e.clientX - startX;
                     const dh = e.clientY - startY;
-                    draggableResizableElement.style.width = `${startWidth + dw}px`;
-                    draggableResizableElement.style.height = `${startHeight + dh}px`;
+                    logo.style.width = `${startWidth + dw}px`;
+                    logo.style.height = `${startHeight + dh}px`;
                   }
                 }
-
-                //let $logo = $('.logo');
-                /*$logo.on('mousedown', function(e) {
-                    e.stopPropagation();
-                  
-                    let initialX = e.clientX;
-                    let initialY = e.clientY;
-                  
-                    let originalTop = parseInt($logo.css('top'));
-                    let originalLeft = parseInt($logo.css('left'));
-                  
-                    $(document).on('mousemove', function(e) {
-                        e.stopPropagation();
-                        let x = originalLeft + e.clientX - initialX + 'px';
-                        let y = originalTop + e.clientY - initialY + 'px';
-                        $logo.css({ 'top': y, 'left': x });
-                    });
-                  
-                    $(document).on('mouseup', function(e) {
-                        e.stopPropagation();
-                        $(document).off('mousemove');
-                        $(document).off('mouseup');
-                    });
-                });*/
 
             })
             reader.readAsDataURL(files[i]);
@@ -288,3 +272,8 @@ $('#download').click(() => {
     });
 });
 
+// Deleting Logo
+
+$('#delete-logo').on('click', () => {
+    $('.logo-focus').remove();
+})

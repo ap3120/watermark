@@ -183,4 +183,6 @@ input:checked[type='checkbox']:before {
     overflow: hidden;
 }
 
-
+.logo-focus {
+    border: 1px dashed #000;
+}
