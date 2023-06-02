@@ -17,7 +17,7 @@
 
     <body>
         <div id='gallery'>
-            <input type='file' id='image-input' multiple='multiple' accept='image/png, image/jpeg, image/jpg'>
+            <input type='file' id='image-input' multiple='multiple' accept='image/png, image/jpeg, image/jpg'/>
 
         </div>
 
@@ -25,7 +25,7 @@
         <div id='display-image'>
             <div class='edit-buttons'>
                 <button id='add-text'>Add Text</button>
-                <button id='add-logo'>Add Logo</button>
+                <input type='file' id='logo-input' multiple='multiple' accept='image/png, image/jpeg, image/jpg'/>
             </div>
             <div class='image-container' id='image-to-download'>
                 <div class='image'></div>
@@ -61,6 +61,16 @@
                     <p>Outline</p>
                     <input type='checkbox' class='outline-checkbox'/>
                     <input class='text-editor-outline' type='color'/>
+                </div>
+            </div>
+            <div class='logo-editor'>
+                <div class='logo-editor-opacity-container'>
+                    <p>Logo opacity</p>
+                    <input class='logo-editor-opacity' type='range' min='0' max='1' step='0.05' value='1'/>
+                </div>
+                <div class='logo-editor-rotate-container'>
+                    <p>Rotate logo</p>
+                    <input class='logo-editor-rotate' type='range' min='0' max='360' step='1' value='0'/>
                 </div>
             </div>
             <button id='download'>Download</button>
