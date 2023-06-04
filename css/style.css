@@ -179,10 +179,9 @@ input:checked[type='checkbox']:before {
     top: 0px;
     left: 0px;
     cursor: move;
-    resize: both;
     overflow: hidden;
 }
 
-.logo-focus {
-    border: 1px dashed #000;
+.logo:hover {
+    resize: both;
 }

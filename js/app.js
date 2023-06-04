@@ -134,42 +134,68 @@ $('#logo-input').on('change', e => {
 
 // Adding text
 
+$('#add-text').on('click', () => {
+    const $text = $('<p>', {'class': 'text text-focus'});
+    $text.html('Type your text...');
+    $text.attr('hasBackground', 'false');
+    $('.image-container').append($text);
+    $text.on('click', () => {
+        const allText = document.getElementsByClassName('text');
+        for (let i=0; i<allText.length; i++) {
+            if ($(allText[i]).get(0) === $text.get(0)) {
+                $text.addClass('text-focus');
+            } else {
+                $(allText[i]).removeClass('text-focus');
+            }
+        }
+        if ($text.attr('hasBackground') === 'true') {
+            $('.background-checkbox').prop('checked', true).trigger('change');
+        } else {
+            $('.background-checkbox').prop('checked', false).trigger('change');
+        }
+        let currentText = $text.html();
+        currentText = currentText.replace(/\s?(<br\s?\/?>)\s?/g, "\r\n");
+        $('.text-editor-input').val(currentText);
+    });
+    $text.on('mousedown', moveText);
+})
+
 $('.text-editor-input:first').on('input', () => {
     let v = $('.text-editor-input:first').val();
     v = v.replace(/\r?\n/g, '<br />');
-    $('.text:first').html(v);
+    $('.text-focus').html(v);
 })
 
 // Bold text
 
 $('.fa-bold:first').click(() => {
-    $('.text:first').toggleClass('bold');
+    $('.text-focus').toggleClass('bold');
 })
 
 // Italic text
 
 $('.fa-italic:first').click(() => {
-    $('.text:first').toggleClass('italic');
+    $('.text-focus').toggleClass('italic');
 })
 
 // Underline text
 
 $('.fa-underline:first').click(() => {
-    $('.text:first').toggleClass('underline');
+    $('.text-focus').toggleClass('underline');
 })
 
 // Change text color
 
 $('.text-editor-color:first').on('input', () => {
     let color = $('.text-editor-color:first').val();
-    $('.text:first').css('color', color);
+    $('.text-focus').css('color', color);
 })
 
 // Change text size
 
 $('.text-editor-size:first').on('input', () => {
     let size = $('.text-editor-size:first').val();
-    $('.text:first').css('font-size', `${size}px`);
+    $('.text-focus').css('font-size', `${size}px`);
     $('#font-size').html(size);
 })
 
@@ -177,33 +203,36 @@ $('.text-editor-size:first').on('input', () => {
 
 $('.text-editor-opacity:first').on('input', () => {
     let opacity = $('.text-editor-opacity:first').val();
-    $('.text:first').css('opacity', opacity);
+    $('.text-focus').css('opacity', opacity);
 })
 
 // Rotate text
 
 $('.text-editor-rotate:first').on('input', () => {
     let angle = $('.text-editor-rotate:first').val();
-    $('.text:first').css('transform', `rotate(${angle}deg)`);
+    $('.text-focus').css('transform', `rotate(${angle}deg)`);
 })
 
 // Moving the text
 
-let $text = $('.text:first');
-$text.on('mousedown', function(e) {
+//let $text = $('.text:first');
+//$text.on('mousedown', function(e) {
+const moveText = e => {
     e.stopPropagation();
   
+    let text = e.target;
+
     let initialX = e.clientX;
     let initialY = e.clientY;
   
-    let originalTop = parseInt($text.css('top'));
-    let originalLeft = parseInt($text.css('left'));
+    let originalTop = parseInt($(text).css('top'));
+    let originalLeft = parseInt($(text).css('left'));
   
     $(document).on('mousemove', function(e) {
         e.stopPropagation();
         let x = originalLeft + e.clientX - initialX + 'px';
         let y = originalTop + e.clientY - initialY + 'px';
-        $text.css({ 'top': y, 'left': x });
+        $(text).css({ 'top': y, 'left': x });
     });
   
     $(document).on('mouseup', function(e) {
@@ -211,13 +240,16 @@ $text.on('mousedown', function(e) {
         $(document).off('mousemove');
         $(document).off('mouseup');
     });
-});
+}
+//});
 
 // Text Background
 
 $('.background-checkbox:first').change(function() {
     if (!$(this).is(':checked')) {
         $('.text-editor-background-color:first').hide();
+        $('.text-focus').css('background-color', 'transparent');
+        $('.text-focus').attr('hasBackground', 'false');
     } else {
         $('.text-editor-background-color:first').show();
     }
@@ -225,7 +257,8 @@ $('.background-checkbox:first').change(function() {
 
 $('.text-editor-background-color:first').on('input', () => {
     const backgroundColor = $('.text-editor-background-color:first').val();
-    $('.text:first').css('background-color', backgroundColor);
+    $('.text-focus').css('background-color', backgroundColor);
+    $('.text-focus').attr('hasBackground', 'true');
 })
 
 // Text outline
@@ -233,32 +266,38 @@ $('.text-editor-background-color:first').on('input', () => {
 $('.outline-checkbox:first').change(function() {
     if (!$(this).is(':checked')) {
         $('.text-editor-outline:first').hide();
-        $('.text:first').addClass('no-outline');
-        $('.text:first').removeClass('outline');
+        $('.text-focus').addClass('no-outline');
+        $('.text-focus').removeClass('outline');
     } else {
         $('.text-editor-outline:first').show();
-        $('.text:first').removeClass('no-outline');
-        $('.text:first').addClass('outline');
+        $('.text-focus').removeClass('no-outline');
+        $('.text-focus').addClass('outline');
     }
 });
 
 $('.text-editor-outline:first').on('input', () => {
     const outlineColor = $('.text-editor-outline:first').val();
-    $('.text:first').css('-webkit-text-stroke-color', outlineColor);
+    $('.text-focus').css('-webkit-text-stroke-color', outlineColor);
+})
+
+// Delete Text
+
+$('#delete-text').on('click', () => {
+    $('.text-focus').remove();
 })
 
 // Logo opacity
 
 $('.logo-editor-opacity:first').on('input', () => {
     const opacity = $('.logo-editor-opacity:first').val();
-    $('.logo').css('opacity', opacity);
+    $('.logo-focus').css('opacity', opacity);
 })
 
 // Rotate logo
 
 $('.logo-editor-rotate:first').on('input', () => {
     const angle = $('.logo-editor-rotate:first').val();
-    $('.logo').css('transform', `rotate(${angle}deg)`);
+    $('.logo-focus').css('transform', `rotate(${angle}deg)`);
 })
 // Download new image
 
