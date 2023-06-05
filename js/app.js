@@ -135,10 +135,14 @@ $('#logo-input').on('change', e => {
 // Adding text
 
 $('#add-text').on('click', () => {
+    const existingTexts = document.getElementsByClassName('text');
+    for (let i=0; i<existingTexts.length; i++) {
+        $(existingTexts[i]).removeClass('text-focus');
+    }
     const $text = $('<p>', {'class': 'text text-focus'});
     $text.html('Type your text...');
     $text.attr({'hasBackground': 'false', 'hasOutline': 'false'});
-    $('.image-container').append($text);
+    $('.image').append($text);
     $text.on('click', () => {
         const allText = document.getElementsByClassName('text');
         for (let i=0; i<allText.length; i++) {
