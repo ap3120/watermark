@@ -137,7 +137,7 @@ $('#logo-input').on('change', e => {
 $('#add-text').on('click', () => {
     const $text = $('<p>', {'class': 'text text-focus'});
     $text.html('Type your text...');
-    $text.attr('hasBackground', 'false');
+    $text.attr({'hasBackground': 'false', 'hasOutline': 'false'});
     $('.image-container').append($text);
     $text.on('click', () => {
         const allText = document.getElementsByClassName('text');
@@ -152,6 +152,11 @@ $('#add-text').on('click', () => {
             $('.background-checkbox').prop('checked', true).trigger('change');
         } else {
             $('.background-checkbox').prop('checked', false).trigger('change');
+        }
+        if ($text.attr('hasOutline') === 'true') {
+            $('.outline-checkbox').prop('checked', true).trigger('change');
+        } else {
+            $('.outline-checkbox').prop('checked', false).trigger('change');
         }
         let currentText = $text.html();
         currentText = currentText.replace(/\s?(<br\s?\/?>)\s?/g, "\r\n");
@@ -215,8 +220,6 @@ $('.text-editor-rotate:first').on('input', () => {
 
 // Moving the text
 
-//let $text = $('.text:first');
-//$text.on('mousedown', function(e) {
 const moveText = e => {
     e.stopPropagation();
   
@@ -241,7 +244,6 @@ const moveText = e => {
         $(document).off('mouseup');
     });
 }
-//});
 
 // Text Background
 
@@ -266,18 +268,17 @@ $('.text-editor-background-color:first').on('input', () => {
 $('.outline-checkbox:first').change(function() {
     if (!$(this).is(':checked')) {
         $('.text-editor-outline:first').hide();
-        $('.text-focus').addClass('no-outline');
-        $('.text-focus').removeClass('outline');
+        $('.text-focus').css('-webkit-text-stroke-color', 'transparent');
+        $('.text-focus').attr('hasOutline', 'false');
     } else {
         $('.text-editor-outline:first').show();
-        $('.text-focus').removeClass('no-outline');
-        $('.text-focus').addClass('outline');
     }
 });
 
 $('.text-editor-outline:first').on('input', () => {
     const outlineColor = $('.text-editor-outline:first').val();
-    $('.text-focus').css('-webkit-text-stroke-color', outlineColor);
+    $('.text-focus').css({'-webkit-text-stroke-color': outlineColor, '-webkit-text-stroke-width': '1px'});
+    $('.text-focus').attr('hasOutline', 'true');
 })
 
 // Delete Text

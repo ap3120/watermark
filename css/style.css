@@ -27,6 +27,16 @@ body {
     overflow-y: auto;
 }
 
+label {
+    border-radius: 5px;
+    border: 1px solid #000;
+    height: 20px;
+}
+
+input[type='file'] {
+    display: none;
+}
+
 .thumbnail-container {
     position: relative;
 }
@@ -159,14 +169,6 @@ input[type='checkbox']:before {
 input:checked[type='checkbox']:before {
     left: 20px;
     transition: 0.3s;
-}
-
-.outline {
-    -webkit-text-stroke-width: 2px;
-}
-
-.no-outline {
-    -webkit-text-stroke-width: 0px;
 }
 
 .logo {
